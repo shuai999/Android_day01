@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.novate.android_day01">
+
+    <!-- 外拨电话权限-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <!-- 接收发送短信权限-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".simple1.MainActivity">
+
+            <!-- intent-filter：这个标签就是：创建桌面快捷方式的方法-->
+            <intent-filter>
+
+                <!-- MAIN：应用程序的入口-->
+                <action android:name="android.intent.action.MAIN" />
+                <!-- LAUNCHER：应用程序启动器-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- 广播接收者-->
+        <receiver android:name=".simple1.IPCallBroadcastReceiver">
+            <!-- 意图过滤器 -->
+            <intent-filter >
+                <!-- 外拨电话的广播接收者事件 -->
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- 广播接收者 -->
+        <receiver android:name=".simple2.SMSListenerBroadcastReceiver">
+            <!-- 意图过滤器 -->
+            <intent-filter>
+                <!-- 短信接收张的广播接收者事件 -->
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+
+
+        <!-- 广播接收者 -->
+        <receiver android:name=".simple3.SDCardListenerBroadcastReceiver">
+            <!-- 意图过滤器-->
+            <intent-filter >
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+
+                <!-- 必须添加这个属性，否则监听不到这些事件-->
+                <data android:scheme="file"/>
+            </intent-filter>
+        </receiver>
+
+
+
+        <!-- 广播接收者 -->
+        <receiver android:name=".simple4.BootCompleteBroadcastReceiver">
+            <!-- 意图过滤器-->
+            <intent-filter>
+                <!-- 开机启动完成的事件-->
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+
+        <!-- 广播接收者-->
+        <receiver android:name=".simple5.AZXZSJBroadcastReceiver">
+            <!-- 意图过滤器 -->
+            <intent-filter >
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <!-- 必须添加这个属性，否则接收不到这些事件-->
+                <data android:scheme="package"/>
+
+            </intent-filter>
+        </receiver>
+
+
+        <!-- 广播接收者 -->
+        <receiver android:name=".simple6.TestBroadcastReceiver">
+            <!-- 意图过滤器 -->
+            <intent-filter>
+                <!-- 自定义广播设置的 setAction() -->
+                <action android:name="cn.novate.CUSTOMBROADCAST"/>
+                <!-- 自定义广播设置的 setData() -->
+                <data android:scheme="novate"/>
+            </intent-filter>
+        </receiver>
+
+
+        <!-- 以下是用于接收所有的有序广播 -->
+
+        <!-- 省级的广播接收者-->
+        <receiver android:name=".simple8.receiver.ProvinceBroadcastReceiver">
+            <!-- priority的最大值是1000,最小是-1000 -->
+            <intent-filter android:priority="500">
+                <!-- 有序广播设置 setAction()-->
+                <action android:name="cn.novate.gov.FFNTBT"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".simple8.receiver.ProvinceBroadcastReceiver">
+            <intent-filter android:priority="1000">
+                <!-- 有序广播中设置的 setAction() -->
+                <action android:name="cn.itcast.gov.FFNTBT"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".simple8.receiver.CityBroadcastReceiver">
+            <intent-filter android:priority="800">
+                <!-- 有序广播中设置的 setAction() -->
+                <action android:name="cn.itcast.gov.FFNTBT"/>
+            </intent-filter>
+        </receiver>
+
+
+        <receiver android:name=".simple8.receiver.FarmerBroadcastReceiver">
+            <intent-filter android:priority="300">
+                <!-- 有序广播中设置的 setAction() -->
+                <action android:name="cn.itcast.gov.FFNTBT"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
